@@ -27,11 +27,6 @@ const predictionSchema = new mongoose.Schema(
         message: 'Podium must contain exactly 3 drivers.',
       },
     },
-    fastestLap: {
-      type: String,
-      required: [true, 'Fastest lap prediction is required'],
-      trim: true,
-    },
     score: {
       type: Number,
       default: 0,
