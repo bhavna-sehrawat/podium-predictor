@@ -37,8 +37,7 @@ export const registerUser = async (req, res) => {
         email: user.email,
         role: user.role,
         totalScore: user.totalScore,
-
-        // TODO: JWT Token
+        token: generateToken(user._id),
       });
     } else {
       res.statud(400).json({ message: 'Invalid user data' });
