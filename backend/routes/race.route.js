@@ -1,10 +1,9 @@
 import express from 'express';
-import { getUserProfile } from '../controllers/user.controller.js';
+import { getRacesSchedule } from '../controllers/race.controller.js';
 import { protect } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
 
-
-router.route('/profile').get(protect, getUserProfile);
+router.route('/').get(protect, getRacesSchedule);
 
 export default router;

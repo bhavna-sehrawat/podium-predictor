@@ -6,6 +6,7 @@ import generateToken from '../utils/generateToken.js'
 export const registerUser = async (req, res) => {
   try {
     const {username, email, password} = req.body;
+    console.log(`Request for registering username ${username}`);
 
     // 1. Validation: Check if all fields are provided or not.
     if(!username || !email || !password) {
@@ -40,7 +41,7 @@ export const registerUser = async (req, res) => {
         token: generateToken(user._id),
       });
     } else {
-      res.statud(400).json({ message: 'Invalid user data' });
+      res.status(400).json({ message: 'Invalid user data' });
     }
   } catch (error) {
     console.error('Registration Error:', error);
@@ -74,7 +75,7 @@ export const loginUser = async (req, res) => {
      return res.status(401).json({ message: 'Invalid email or password' });
    }
   } catch(error) {
-    onsole.error('Login Error:', error);
+    console.error('Login Error:', error);
     res.status(500).json({ message: 'Server error during login' });
   }
 };
