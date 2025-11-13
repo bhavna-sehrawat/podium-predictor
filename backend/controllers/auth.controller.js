@@ -1,5 +1,6 @@
 import User from '../model/user.model.js';
 import bcrypt from 'bcrypt';
+import generateToken from '../utils/generateToken.js'
 
 
 export const registerUser = async (req, res) => {
@@ -45,5 +46,36 @@ export const registerUser = async (req, res) => {
   } catch (error) {
     console.error('Registration Error:', error);
     res.status(500).json({ message: 'Server error during user registration' });
+  }
+};
+
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // 1. Validation: Check if email and password are provided
+    if(!email || !password) {
+      return res.status(400).json({ message: 'Please provide email and password' });
+    }
+
+    // 2. Find the user by email
+    // IMPORTANT: We must explicitly select the password because our model has `select: false`
+    const user = await User.findOne({ email }).select('+password');
+
+    // 3. Check if user exists AND if the password matches
+    if (user && (await bcrypt.compare(password, user.password))) {
+      res.status(200).json({
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        token: generateToken(user._id), // Generate and send the JWT
+      });
+   } else {
+     return res.status(401).json({ message: 'Invalid email or password' });
+   }
+  } catch(error) {
+    onsole.error('Login Error:', error);
+    res.status(500).json({ message: 'Server error during login' });
   }
 };
