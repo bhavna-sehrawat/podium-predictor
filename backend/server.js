@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.route.js';
 import userRoutes from './routes/user.route.js';
 import raceRoutes from './routes/race.route.js';
 import predictionRoutes from './routes/prediction.route.js'; 
+import adminRoutes from './routes/admin.route.js';
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/races', raceRoutes);
 app.use('/api/predictions', predictionRoutes);
+app.use('/api/admin', adminRoutes); 
 
 const PORT = process.env.PORT || 5000;
 
