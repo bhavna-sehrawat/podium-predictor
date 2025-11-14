@@ -20,4 +20,18 @@ const getUserProfile = asyncHandler(async(req, res) => {
   }
 });
 
-export { getUserProfile };
+const getLeaderboard = asyncHandler(async(req,res) => {
+
+  const users = await User.find({}).sort({ totlaScore: -1 }).limit(100);
+
+  const leaderboard = users.map(user => ({
+    _id: user._id,
+    username: user.username,
+    totalScore: user.totalScore,
+  }));
+
+  res.status(200).json(leaderboard);
+})
+
+
+export { getUserProfile, getLeaderboard };
